@@ -10,6 +10,7 @@ import tkinter
 from tkinter import filedialog
 import requests
 import sys
+import os
 
 def printCourseList():
     driver.get('https://plato.pusan.ac.kr/')
@@ -114,7 +115,9 @@ if __name__ == '__main__':
 
     phase = 0 # 0: 과목선택, 1: 주차 선택
     while True:
-        
+        os.system('cls') # window
+        os.system('clear') # linux, mac
+
         if phase == 0:
             course = printCourseList()
             if course is str and course == "exit":
