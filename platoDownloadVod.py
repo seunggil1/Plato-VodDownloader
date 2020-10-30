@@ -12,6 +12,7 @@ from tkinter import filedialog
 import requests, urllib3
 import sys
 import os
+import errno
 import getpass
 import pefile
 import time
@@ -108,8 +109,17 @@ def fileDownload(vodSrc : str):
     file_name = responseHeader.get('Content-disposition')
     file_name = file_name[file_name.find('"')+1:]
     file_name = file_name[:file_name.find('"')]
+
+    file_name = "Download\\" + file_name
+    if not os.path.exists(os.path.dirname(file_name)):
+        try:
+            os.makedirs(os.path.dirname(file_name))
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
+    
     with open(file_name, "wb") as f:
-        print("'%s' 다운로드 진행중.." % file_name)
+        print("'%s' 다운로드 진행중.." % file_name[9:])
         total_length = responseHeader.get('content-length')
         if total_length is None: # no content length header
             f.write(response.content)
