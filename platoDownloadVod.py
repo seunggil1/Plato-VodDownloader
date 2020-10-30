@@ -2,25 +2,26 @@
 # https://plato-trans.pusan.ac.kr/rest/stream/eca93921-8410-4e58-9e07-38d1c2535175/convert;settId=38
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
-from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 import re
-import time
 import tkinter
 from tkinter import filedialog
-import requests
+import requests, urllib3
 import sys
 import os
-import urllib3
 import getpass
-import subprocess
+import pefile
+import time
 
 def login():
     size = os.get_terminal_size().columns
     print("="*size)
     print("플라토 로그인을 진행합니다.")
     name = input("학번 : ")
-    password = getpass.getpass()
+    password = getpass.getpass(prompt='Password(화면에 보이지 않습니다): ')
     print("로그인중..")
 
     driver.get('https://plato.pusan.ac.kr/')
@@ -74,6 +75,7 @@ def printWeekList(select : int):
         content = (str(content_list[i]).split('\n'))[0]
         content = content.split(' ')[4]
         driver.find_element_by_xpath('//*[@'+content+']/div/div/div[3]/span').click()
+    driver.implicitly_wait(3)
 
     driver.find_element_by_xpath('/html/body/div[3]/div[2]/div[1]/div/div[1]/div[2]/ul/li['+str(select)+']/div/a/div/div[2]').click()
     html = driver.page_source
@@ -84,9 +86,9 @@ def printWeekList(select : int):
 
     print("="*size)
     for i in range(len(sectionList)):
-        print("{:2}".format(i+1),end =' ')
+        print("{:2}".format(i+1),end ='| ')
         print(sectionList[i].attrs['aria-label'])
-    print("-과목 선택으로 돌아가기",'('+str(len(sectionList)+1)+' 입력)')
+    print("\n=과목 선택으로 돌아가기",'('+str(len(sectionList)+1)+' 입력)')
     print("="*size)
     while True:
         try:
@@ -123,22 +125,44 @@ def fileDownload(vodSrc : str):
 
 size = 0
 if __name__ == '__main__':
-    
-    # output = subprocess.check_output('wmic datafile where name"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" get Version /value',shell=True)
-    # print(output.decode('utf-8').strip())
+
+    #크롬 버전 읽어오기
+    try:
+        pe = pefile.PE(r'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe')
+        FileVersion = pe.FileInfo[0][0].StringTable[0].entries[b'FileVersion']
+    except:
+        try:
+            pe = pefile.PE(r'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
+            FileVersion = pe.FileInfo[0][0].StringTable[0].entries[b'FileVersion']
+        except:
+            print("Error : chrome이 설치되어 있지 않거나 지원하지 않는 버전입니다.")
+            time.sleep(3)
+            exit()
+    FileVersion = FileVersion.decode("utf-8")
+    FileVersion = FileVersion[:2]
+
+    if FileVersion == '85':
+        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
+    elif FileVersion == '86':
+        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
+    elif FileVersion == '87':
+        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
+    else:
+        # 수동으로 webdriver 선택
+        # tkinter.Tk().withdraw() 
+        # webdriverLocation = tkinter.filedialog.askopenfile(filetypes =[('webdriver', '*.exe')]) 
+        print("Error : 지원되지 않는 chrome 버전입니다.")
+        time.sleep(3)
+        exit()
+
+        
     urllib3.disable_warnings()
-    tkinter.Tk().withdraw()
-    webdriverLocation = tkinter.filedialog.askopenfile(filetypes =[('webdriver', '*.exe')])
-    
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('--start-fullscreen')
     options.add_argument('disable-gpu')
 
-    try:
-        driver = webdriver.Edge(webdriverLocation.name)
-    except:
-        driver = webdriver.Chrome(webdriverLocation.name, options=options)
+    driver = webdriver.Chrome(webdriverLocation, options=options)
     
     while True:
         try:
