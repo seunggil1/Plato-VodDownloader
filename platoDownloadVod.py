@@ -199,4 +199,5 @@ if __name__ == '__main__':
 
     driver.get('https://plato.pusan.ac.kr/')
     driver.find_element_by_xpath('//*[@id="page-header"]/div[1]/div[2]/ul/li[2]/a').click()
-
+    driver.quit()
+    exit()
