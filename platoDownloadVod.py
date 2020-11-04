@@ -78,7 +78,10 @@ def printWeekList(select : int):
         driver.find_element_by_xpath('//*[@'+content+']/div/div/div[3]/span').click()
     driver.implicitly_wait(3)
 
-    driver.find_element_by_xpath('//*[@id="page-content"]/div/div[1]/div[2]/ul/li['+str(select)+']/div/a/div/div[2]').click()
+    soup = soup.find('ul',{'class':'my-course-lists coursemos-layout-0'})
+    soup = soup.find_all('a')
+    driver.get(soup[select-1].attrs['href'])
+
     html = driver.page_source
     soup = BS4(html,'html.parser')
     week = soup.find('li',{'class':'section main clearfix current'})
@@ -171,7 +174,6 @@ if __name__ == '__main__':
     options.add_argument('headless')
     options.add_argument('--start-fullscreen')
     options.add_argument('disable-gpu')
-
     driver = webdriver.Chrome(webdriverLocation, options = options)
     
     while True:
