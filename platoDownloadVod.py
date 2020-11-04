@@ -67,7 +67,7 @@ def printCourseList():
 
 
 def printWeekList(select : int):
-    driver.get('https://plato.pusan.ac.kr/login/index.php?testsession=66892')
+    driver.get('https://plato.pusan.ac.kr/')
     driver.implicitly_wait(3)
     html = driver.page_source
     soup = BS4(html,'html.parser')
@@ -78,8 +78,7 @@ def printWeekList(select : int):
         driver.find_element_by_xpath('//*[@'+content+']/div/div/div[3]/span').click()
     driver.implicitly_wait(3)
 
-    driver.find_element_by_xpath('/html/body/div[3]/div[2]/div[1]/div/div[1]/div[2]/ul/li['+str(select)+']/div/a/div/div[2]').click()
-    # '/html/body/div[4]/div[2]/div/div[1]/div[1]/div[2]/ul/li['+str(select)+']/div/a/div/div[2]'
+    driver.find_element_by_xpath('//*[@id="page-content"]/div/div[1]/div[2]/ul/li['+str(select)+']/div/a/div/div[2]').click()
     html = driver.page_source
     soup = BS4(html,'html.parser')
     week = soup.find('li',{'class':'section main clearfix current'})
@@ -155,9 +154,9 @@ if __name__ == '__main__':
     if FileVersion == '85':
         webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
     elif FileVersion == '86':
-        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
+        webdriverLocation = 'Chrome_86.0.4240.22\\chromedriver.exe'
     elif FileVersion == '87':
-        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
+        webdriverLocation = 'Chrome_87.0.4280.20\\chromedriver.exe'
     else:
         # 수동으로 webdriver 선택
         # tkinter.Tk().withdraw() 
@@ -173,7 +172,7 @@ if __name__ == '__main__':
     options.add_argument('--start-fullscreen')
     options.add_argument('disable-gpu')
 
-    driver = webdriver.Chrome(webdriverLocation, options= options)
+    driver = webdriver.Chrome(webdriverLocation, options = options)
     
     while True:
         try:
