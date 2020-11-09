@@ -5,23 +5,22 @@ header = {
     'Host' : 'plato.pusan.ac.kr', 
     'Origin' : 'https://plato.pusan.ac.kr',
     'Content-Type' : 'application/x-www-form-urlencoded',
-    'Referer': 'https://plato.pusan.ac.kr/mod/assign/view.php?id=694666&action=editsubmission',
-    'Cookie' : 'moodle_notice_1_1184584=hide; moodle_notice_1_1186586=hide; moodle_notice_1_1156974=hide; moodle_notice_1_1154844=hide; moodle_notice_1_1189928=hide; moodle_notice_1_1161430=hide; moodle_notice_1_1198313=hide; moodle_notice_1_1197192=hide; cma-uuid=dcd5f0c4-14df-469c-9017-0806a7ec268d; MoodleSession=r8c3imj3ggev7jvk9shb2aap6r; ubboard_read=%2515%2502%25A9%25C4%25F4%25C8%25E8%25A4%25E33O%2522%25F2%25A7%258B;'
+    'Referer': 'https://plato.pusan.ac.kr/mod/assign/view.php?id=717914&action=editsubmission',
+    'Cookie' : 'moodle_notice_1_1210654=hide; moodle_notice_1_1161430=hide; moodle_notice_1_1154844=hide; cma-uuid=dd70b7d6-52ae-4214-9a49-7984c2341218; MoodleSession=9h1rakd1nog19khudisv1ipci6;'
     }
 
 #files_filemanager값은 amp;itemid=717120834 찾고,
 #lastmodified는 원하는 unix시간
 data = {
-    "lastmodified" : "1603692129",
-    "id" : "687632",
+    "lastmodified" : "1604910985",
+    "id" : "717914",
     "userid" : "66892",
     "action" : "savesubmission",
-    "sesskey" : "kDsDQyfNhL",
+    "sesskey" : "fJqhn8GweZ",
     "_qf__mod_assign_submission_form" : 1,
-    "files_filemanager" : "381160916",
-    "submitbutton" : "%EC%A0%80%EC%9E%A5",
+    "files_filemanager" : "714581192",
+    "submitbutton" : "%EC%A0%80%EC%9E%A5"
 }    
 
-res = requests.post(url, headers = json.dumps(header), data=json.dumps(data))
-
-s = "%%res"
+res = requests.post(url, headers = header, data=data)
+print(1)
