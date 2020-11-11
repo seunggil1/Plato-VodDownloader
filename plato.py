@@ -2,12 +2,24 @@ import requests, json
 url = "https://plato.pusan.ac.kr/mod/assign/view.php"
 
 header = {
-    'Host' : 'plato.pusan.ac.kr', 
-    'Origin' : 'https://plato.pusan.ac.kr',
-    'Content-Type' : 'application/x-www-form-urlencoded',
-    'Referer': 'https://plato.pusan.ac.kr/mod/assign/view.php?id=717914&action=editsubmission',
-    'Cookie' : 'moodle_notice_1_1210654=hide; moodle_notice_1_1161430=hide; moodle_notice_1_1154844=hide; cma-uuid=dd70b7d6-52ae-4214-9a49-7984c2341218; MoodleSession=9h1rakd1nog19khudisv1ipci6;'
-    }
+    'Connection': 'keep-alive',
+    'Content-Length': '181',
+    'Pragma': 'no-cache',
+    'Cache-Control' : 'no-cache',
+    'Upgrade-Insecure-Requests' : '1',
+    'Origin': 'https://plato.pusan.ac.kr',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 Edg/86.0.622.63',
+    'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site' : 'same-origin',
+    'Sec-Fetch-Mode' : 'navigate',
+    'Sec-Fetch-User' : '?1',
+    'Sec-Fetch-Dest' : 'document',
+    'Referer': 'https://plato.pusan.ac.kr/mod/assign/view.php?id=725734&action=editsubmission',
+    'Accept-Encoding' : 'gzip, deflate, br',
+    'Accept-Language' : 'ko,en;q=0.9,en-US;q=0.8',
+    'Cookie': 'MoodleSession=fi4bsh01o721up3ndfmtk1n1o3'
+}
 
 #files_filemanager값은 amp;itemid=717120834 찾고,
 #lastmodified는 원하는 unix시간
