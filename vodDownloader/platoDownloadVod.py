@@ -225,7 +225,7 @@ if __name__ == '__main__':
                 soup = BS4(html,'html.parser')
                 source = str(soup.find_all('source'))
                 source = source.split('/')
-                
+                # match = re.search(r'\d{4}/\d{2}/\d{2}', text)
                 if(source[4] == '_definst_'):
                     source = source[9]
                 else:
