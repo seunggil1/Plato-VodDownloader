@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plato_calendar/ics.dart';
-
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 void main() {
   runApp(MyApp());
 }
@@ -28,37 +28,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    test();
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: SfCalendar(
+            headerHeight: 30,
+            view: CalendarView.month,
+            firstDayOfWeek: 0, // 한주의 시작 - 0: 일, 1: 월 ..
+            monthViewSettings: MonthViewSettings(
+              showAgenda: true,
+              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+              monthCellStyle: MonthCellStyle()),
+            dataSource: _getCalendarDataSource(),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+      ));
   }
+}
+
+class DataSource extends CalendarDataSource {
+  DataSource(List<Appointment> source) {
+    appointments = source;
+  }
+}
+
+DataSource _getCalendarDataSource() {
+  List<Appointment> appointments = <Appointment>[];
+  appointments.add(Appointment(
+    startTime: DateTime.now(),
+    endTime: DateTime.now().add(Duration(days: 3,hours: 2)),
+    isAllDay: true,
+    subject: 'Meeting',
+    color: Colors.blue,
+    startTimeZone: '',
+    endTimeZone: '',
+  ));
+
+  return DataSource(appointments);
 }
