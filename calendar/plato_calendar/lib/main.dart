@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plato_calendar/ics.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import './plato.dart';
 void main() {
   runApp(MyApp());
 }
@@ -31,6 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Plato a = Plato();
+    a.login();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -53,7 +57,7 @@ class DataSource extends CalendarDataSource {
   DataSource(List<Appointment> source) {
     appointments = source;
   }
-  
+
   @override
   DateTime getStartTime(int index) {
     return appointments[index].from;
