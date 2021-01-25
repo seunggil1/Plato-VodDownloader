@@ -147,12 +147,11 @@ class Plato {
     );
     String body = "username=$id&password=${Uri.encodeQueryComponent(pw)}";
 
-    response = await post("https://plato.pusan.ac.kr/login/index.php",
+    response = await client.post("https://plato.pusan.ac.kr/login/index.php",
       headers: {
         "Host": "plato.pusan.ac.kr",
         "Connection": "keep-alive",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
+        "Cache-Control": "max-age=0",
         "Upgrade-Insecure-Requests": "1",
         "Origin": "https://plato.pusan.ac.kr",
         "Content-Type": "application/x-www-form-urlencoded",
@@ -164,7 +163,7 @@ class Plato {
         "Sec-Fetch-Dest": "document",
         "Referer": "https://plato.pusan.ac.kr/",
         "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "ko,en;q=0.9,en-US;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+        "Accept-Language": "ko,en;q=0.9,en-US;q=0.8",
         "Cookie" : "$moodleSession"
       },
       body: body
