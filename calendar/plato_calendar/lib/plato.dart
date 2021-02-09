@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 
 class Plato {
   Client client = Client();
-  String id ="";
-  String pw = "";
+  String id ="201722102";
+  String pw = "rkdtmdrlf1!";
 
   String sesskey = "";
   String moodleSession = "";
@@ -145,7 +145,7 @@ class Plato {
     },
     body: '[{"index":0,"methodname":"core_fetch_notifications","args":{"contextid":2}}]'
     );
-    String body = "username=$id&password=${Uri.encodeQueryComponent(pw)}";
+    String body = "username=$id&password=$pw";
 
     response = await client.post("https://plato.pusan.ac.kr/login/index.php",
       headers: {
