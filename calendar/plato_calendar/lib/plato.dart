@@ -12,8 +12,8 @@ class Plato {
   String moodleSession = "";
 
   Future<bool> login() async {
-    pw = Uri.encodeQueryComponent(pw);
-    String body = 'username=$id&password=$pw';
+
+    String body = 'username=$id&password=${Uri.encodeQueryComponent(pw)}';
     Response response = await post("https://plato.pusan.ac.kr/login/index.php",
       headers: {
         'Host': 'plato.pusan.ac.kr',
@@ -38,7 +38,7 @@ class Plato {
       },
       body: body);
 
-    print(1);
+    String result = response.body;
     return true;
   }
 
