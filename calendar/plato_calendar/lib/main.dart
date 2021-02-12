@@ -1,9 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:plato_calendar/ics.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import './plato.dart';
+
+// 프록시 사용할 떄 주석 해제 처리.
+// class MyHttpOverrides extends HttpOverrides{
+//   @override
+//   HttpClient createHttpClient(SecurityContext context){
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+//   }
+// }
 void main() {
+  // HttpOverrides.global = new MyHttpOverrides();
   runApp(MyApp());
 }
 
