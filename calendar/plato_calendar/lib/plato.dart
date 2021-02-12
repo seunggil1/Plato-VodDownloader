@@ -1,10 +1,15 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:icalendar_parser/icalendar_parser.dart';
+import 'ics.dart';
 
 class Plato {
   String id ="";
   String pw = "";
   String moodleSession = "";
-
+  String sesskey = "";
   Future<bool> login() async {
 
     String body = 'username=$id&password=${Uri.encodeQueryComponent(pw)}&loginbutton=%EB%A1%9C%EA%B7%B8%EC%9D%B8';
@@ -52,7 +57,50 @@ class Plato {
   }
   
   Future<bool> getCalendar() async{
+    String body;
+    http.Response response;
+    response = await http.get("https://plato.pusan.ac.kr/calendar/export.php?course=1",
+      headers: {
+        "Host": "plato.pusan.ac.kr",
+        "Connection": "close",
+        "Cache-Control": "max-age=0",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.63",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "ko,en;q=0.9,en-US;q=0.8",
+        "Cookie": moodleSession
+      }
+    );
+    body = RegExp('"sesskey":".*?"').stringMatch(response.body);
+    body = '{' + body + '}';
+    sesskey = "sesskey=${jsonDecode(body)["sesskey"]}";
 
+    body = "$sesskey&_qf__core_calendar_export_form=1"
+            + "&${Uri.encodeQueryComponent("events[exportevents]")}=all"
+            + "&${Uri.encodeQueryComponent("period[timeperiod]")}=recentupcoming"
+            + "&export=${Uri.encodeQueryComponent("내보내기")}";
+    response = await http.post("https://plato.pusan.ac.kr/calendar/export.php",
+      headers: {
+        "Host": "plato.pusan.ac.kr",
+        "Connection": "close",
+        "Content-Length": body.length.toString(),
+        "Cache-Control": "max-age=0",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.63",
+        "Origin": "https://plato.pusan.ac.kr",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Referer": "https://plato.pusan.ac.kr/calendar/export.php?course=1",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "ko,en;q=0.9,en-US;q=0.8",
+        "Cookie": moodleSession
+      },
+      body : body
+    );
+    iCalendar = ICalendar.fromString(response.body);
+
+    return true;
   }
   Future<bool> logout() async{
     print(1);

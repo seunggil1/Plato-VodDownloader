@@ -1,9 +1,10 @@
-import 'dart:convert';
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:icalendar_parser/icalendar_parser.dart';
 
+ICalendar iCalendar;
 void test() async{
   String bytes = await rootBundle.loadString('icalexport.ics');
-  final ICalendar iCalendar = ICalendar.fromString(bytes);
+  iCalendar = ICalendar.fromString(bytes);
   print(1);
 }

@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Plato a = Plato();
-    a.login();
+    a.getCalendar();
     return SafeArea(
       child: Scaffold(
         body: Container(
