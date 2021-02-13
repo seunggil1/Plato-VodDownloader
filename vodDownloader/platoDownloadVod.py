@@ -111,7 +111,8 @@ def printWeekList(select : int):
 def fileDownload(fileName : str, vodSrc : str): 
     # m3u8을 받아오면 200~400개의 ts파일 경로가 적혀있음.
     # 각 ts파일을 다운로드해서 합치면 완료.
-    #vodSrc : https://yrrabcpuligv5528165.cdn.ntruss.com/hls//2020/10/12/1392f7cc-d708-4ceb-b610-eddc875cfdd6/a69a1e0b-c419-45ce-a72f-e3de61fc1cec.mp4/index.m3u8
+    # vodSrc : https://yrrabcpuligv5528165.cdn.ntruss.com/hls//2020/10/12/1392f7cc-d708-4ceb-b610-eddc875cfdd6/a69a1e0b-c419-45ce-a72f-e3de61fc1cec.mp4/index.m3u8
+    # 새로운 다운로드 경로 작동 되는거 확인함. https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid=bf229b2e-cea9-4155-b272-2631313a6172
     if not os.path.exists("Download"):
         try:
             os.makedirs("Download")
