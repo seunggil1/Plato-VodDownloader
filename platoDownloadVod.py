@@ -86,8 +86,7 @@ def printWeekList(select : int):
 
     html = driver.page_source
     soup = BS4(html,'html.parser')
-    week = soup.find('li',{'class':'section main clearfix current'})
-    sectionList = soup.find_all('li',{'class' : 'section main clearfix'})
+    sectionList = soup.find_all('li',{'class' : re.compile(r'section main clearfix current|section main clearfix')})
     sectionList = sectionList[1:]
 
     print("="*size)
@@ -167,6 +166,8 @@ if __name__ == '__main__':
         webdriverLocation = 'Chrome_87.0.4280.20\\chromedriver.exe'
     elif FileVersion == '88':
         webdriverLocation = 'Chrome_88.0.4324.96\\chromedriver.exe'
+    elif FileVersion == '89':
+        webdriverLocation = 'Chrome_89.0.4389.23\\chromedriver.exe'
     else:
         # 수동으로 webdriver 선택
         # tkinter.Tk().withdraw() 
