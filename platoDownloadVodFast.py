@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert

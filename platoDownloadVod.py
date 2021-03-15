@@ -1,5 +1,4 @@
-# https://plato-vod.pusan.ac.kr:8443/streams/_definst_/mp4:8502ad70-0329-4d6d-b864-cafa57d431d6/2020/09/29/eca93921-8410-4e58-9e07-38d1c2535175/d9a3be75-13a6-4582-96c7-b17a54da953f.mp4/playlist.m3u8"
-# https://plato-trans.pusan.ac.kr/rest/stream/eca93921-8410-4e58-9e07-38d1c2535175/convert;settId=38
+#-*- coding:utf-8 -*-
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
