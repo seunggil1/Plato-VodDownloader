@@ -19,6 +19,8 @@ import time
 import re
 import shutil
 
+
+
 def login():
     size = os.get_terminal_size().columns
     print("="*size)
@@ -62,6 +64,9 @@ def printCourseList():
             print("잘못된 입력입니다.")
             continue
         if 0 < select < len(courseList) + 1:
+            global courseName
+            courseName = courseList[select-1].text
+            courseName = courseName[:courseName.find(' ')]
             return select
         elif select == len(courseList) + 1:
             return "exit"
@@ -142,6 +147,7 @@ def fileDownload(fileName : str, vodSrc : str):
 
 
 size = 0
+courseName = ""
 if __name__ == '__main__':
 
     #크롬 버전 읽어오기
@@ -235,7 +241,7 @@ if __name__ == '__main__':
                 soup = BS4(html,'html.parser')
                 source = str(soup.find_all('source'))
                 source = source[source.find('https'):source.find('m3u8')+4]
-                fileDownload(week.attrs['aria-label']+'_'+str(i+1),source)
+                fileDownload(courseName+week.attrs['aria-label']+'_'+str(i+1),source)
 
     driver.get('https://plato.pusan.ac.kr/')
     driver.find_element_by_xpath('//*[@id="page-header"]/div[1]/div[2]/ul/li[2]/a').click()
