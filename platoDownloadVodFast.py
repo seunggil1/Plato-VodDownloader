@@ -113,7 +113,6 @@ def fileDownload(vodSrc : str):
     file_name = responseHeader.get('Content-disposition')
     file_name = file_name[file_name.find('"')+1:]
     file_name = file_name[:file_name.find('"')]
-    #file_name = file_name.decode('cp949').encode('utf-8')
     file_name = "Download\\" + file_name
     if not os.path.exists(os.path.dirname(file_name)):
         try:
@@ -175,7 +174,7 @@ if __name__ == '__main__':
     urllib3.disable_warnings()
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     options = webdriver.ChromeOptions()
-    #options.add_argument('headless')
+    options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument('disable-gpu')
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
