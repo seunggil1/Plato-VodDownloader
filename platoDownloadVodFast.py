@@ -1,5 +1,3 @@
-# https://plato-vod.pusan.ac.kr:8443/streams/_definst_/mp4:8502ad70-0329-4d6d-b864-cafa57d431d6/2020/09/29/eca93921-8410-4e58-9e07-38d1c2535175/d9a3be75-13a6-4582-96c7-b17a54da953f.mp4/playlist.m3u8"
-# https://plato-trans.pusan.ac.kr/rest/stream/eca93921-8410-4e58-9e07-38d1c2535175/convert;settId=38
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -18,6 +16,7 @@ import pefile
 import time
 import re
 import shutil
+import multiprocessing
 
 def login():
     size = os.get_terminal_size().columns
@@ -106,14 +105,14 @@ def printWeekList(select : int):
         elif week == len(sectionList)+1:
             return "exit"
         print("잘못된 입력입니다.")
-        
+
 def fileDownload(vodSrc : str):
     response = requests.get(vodSrc, stream=True, verify= False)
     responseHeader = response.headers
     file_name = responseHeader.get('Content-disposition')
     file_name = file_name[file_name.find('"')+1:]
     file_name = file_name[:file_name.find('"')]
-
+    #file_name = file_name.decode('cp949').encode('utf-8')
     file_name = "Download\\" + file_name
     if not os.path.exists(os.path.dirname(file_name)):
         try:
@@ -173,6 +172,7 @@ if __name__ == '__main__':
 
         
     urllib3.disable_warnings()
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     options = webdriver.ChromeOptions()
     #options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
@@ -216,6 +216,7 @@ if __name__ == '__main__':
             print('해당 주차 강의를 다운로드 합니다. 완료될 때까지 기다려주세요.')
             print('- 온라인 출석부에서 해당 동영상 강의 열람 횟수가 1회 증가합니다.')
             vod_list = week.find_all('li',{'class':'activity vod modtype_vod'})
+            sourceList = []
             for i in range(0,len(vod_list)):
                 vodLink = re.search(r'https://.*\d*',str(vod_list[i])).group()
                 vodLink = vodLink[:vodLink.find('"')]
@@ -230,7 +231,11 @@ if __name__ == '__main__':
                 soup = BS4(html,'html.parser')
                 source = soup.find('source').attrs['src']
                 source = re.findall(r'\/[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+\/',source)[0][1:-1]
-                fileDownload('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
+                sourceList.append('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
+            pool = multiprocessing.Pool()
+            pool.map(fileDownload,sourceList)
+            pool.close()
+            pool.join()
 
     driver.get('https://plato.pusan.ac.kr/')
     driver.find_element_by_xpath('//*[@id="page-header"]/div[1]/div[2]/ul/li[2]/a').click()
