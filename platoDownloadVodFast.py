@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -62,6 +61,9 @@ def printCourseList():
             print("잘못된 입력입니다.")
             continue
         if 0 < select < len(courseList) + 1:
+            global courseName
+            courseName = courseList[select-1].text
+            courseName = courseName[:courseName.find(' ')]
             return select
         elif select == len(courseList) + 1:
             return "exit"
@@ -107,12 +109,12 @@ def printWeekList(select : int):
             return "exit"
         print("잘못된 입력입니다.")
 
-def fileDownload(vodSrc : str):
+def fileDownload(downloadInfo):
+    vodSrc = downloadInfo[0]
     response = requests.get(vodSrc, stream=True, verify= False)
     responseHeader = response.headers
     file_name = responseHeader.get('Content-disposition')
-    file_name = file_name[file_name.find('"')+1:]
-    file_name = file_name[:file_name.find('"')]
+    file_name = downloadInfo[1] + file_name[file_name.rfind('.'):-1]
     file_name = "Download\\" + file_name
     if not os.path.exists(os.path.dirname(file_name)):
         try:
@@ -136,8 +138,10 @@ def fileDownload(vodSrc : str):
                 sys.stdout.flush()
 
 size = 0
+courseName = ""
 if __name__ == '__main__':
-
+    # exe에서 multiprocessing 오류 발생 막는 코드
+    multiprocessing.freeze_support()
     #크롬 버전 읽어오기
     try:
         pe = pefile.PE(r'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe')
@@ -227,11 +231,16 @@ if __name__ == '__main__':
                     da.dismiss()
                 except:
                     print("",end='')
+                sourceIter = []
                 html=driver.page_source
                 soup = BS4(html,'html.parser')
                 source = soup.find('source').attrs['src']
                 source = re.findall(r'\/[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+\/',source)[0][1:-1]
-                sourceList.append('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
+                sourceIter.append('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
+                source = str(soup.find_all('source'))
+                source = source[source.find('https'):source.find('m3u8')+4]
+                sourceIter.append(courseName+week.attrs['aria-label']+'_'+str(i+1))
+                sourceList.append(sourceIter)
             pool = multiprocessing.Pool()
             pool.map(fileDownload,sourceList)
             pool.close()
