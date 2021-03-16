@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -137,7 +137,7 @@ def fileDownload(vodSrc : str):
 
 size = 0
 if __name__ == '__main__':
-    
+
     #크롬 버전 읽어오기
     try:
         pe = pefile.PE(r'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe')
