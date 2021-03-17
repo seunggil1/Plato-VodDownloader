@@ -1,8 +1,8 @@
-# PNU-Plato
+# Plato-VodDownloader
 
-## 1. PNU-Plato vod Downloader
+## 1. Plato vod Downloader
 ### Plato 녹화 강의 동영상 다운로드 프로그램(Zoom 강의는 불가능합니다.)
-#### Lastest version 1.04
+#### Lastest version 1.06
 #### How to use
 1. 크롬 85,86,87,88,89 버전 설치
 2. platoDownloadVod.exe 실행
