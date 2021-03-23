@@ -225,6 +225,8 @@ if __name__ == '__main__':
                 vodLink = re.search(r'https://.*\d*',str(vod_list[i])).group()
                 vodLink = vodLink[:vodLink.find('"')]
                 vodLink = vodLink.replace('view','viewer')
+                if(vodLink.find('https://plato.pusan.ac.kr/mod/vod/viewer.php?') == -1):
+                    continue
                 driver.get(vodLink)
                 try:
                     da = Alert(driver)
