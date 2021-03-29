@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from bs4 import BeautifulSoup as BS4
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -16,7 +17,8 @@ import pefile
 import time
 import re
 import shutil
-import multiprocessing
+
+
 
 def login():
     size = os.get_terminal_size().columns
@@ -108,40 +110,45 @@ def printWeekList(select : int):
         elif week == len(sectionList)+1:
             return "exit"
         print("잘못된 입력입니다.")
-
-def fileDownload(downloadInfo):
-    vodSrc = downloadInfo[0]
-    response = requests.get(vodSrc, stream=True, verify= False)
-    responseHeader = response.headers
-    file_name = responseHeader.get('Content-disposition')
-    file_name = downloadInfo[1] + file_name[file_name.rfind('.'):-1]
-    file_name = "Download\\" + file_name
-    if not os.path.exists(os.path.dirname(file_name)):
+        
+def fileDownload(fileName : str, vodSrc : str): 
+    # m3u8을 받아오면 200~400개의 ts파일 경로가 적혀있음.
+    # 각 ts파일을 다운로드해서 합치면 완료.
+    # vodSrc : https://yrrabcpuligv5528165.cdn.ntruss.com/hls//2020/10/12/1392f7cc-d708-4ceb-b610-eddc875cfdd6/a69a1e0b-c419-45ce-a72f-e3de61fc1cec.mp4/index.m3u8
+    # 새로운 다운로드 경로 작동 되는거 확인함. https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid=bf229b2e-cea9-4155-b272-2631313a6172
+    if not os.path.exists("Download"):
         try:
-            os.makedirs(os.path.dirname(file_name))
+            os.makedirs("Download")
         except OSError as exc: # Guard against race condition
             if exc.errno != errno.EEXIST:
                 raise
-    with open(file_name, "wb") as f:
-        print("'%s' 다운로드 진행중.." % file_name[9:])
-        total_length = responseHeader.get('content-length')
-        if total_length is None: # no content length header
-            f.write(response.content)
-        else:
-            dl = 0
-            total_length = int(total_length)
-            for data in response.iter_content(chunk_size=4096):
-                dl += len(data)
-                f.write(data)
-                done = int(50 * dl / total_length)
-                sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
-                sys.stdout.flush()
+
+    response = requests.get(vodSrc, stream=True, verify= False) # m3u8 파일 다운로드
+    response = response.content.decode('ascii')                 # binary라 decode 진행
+    segments = response.split('\n')
+    vodSrc = vodSrc[:vodSrc.find('index.m3u8')] # index.m3u8 부분 제거
+
+    fileLength = len(segments) 
+    with open('Download\\'+ fileName +'.ts', 'wb') as merged: 
+        for i in range(fileLength):
+            if segments[i] != '' and segments[i][0] != '#': # 빈줄이랑 주석부분은 제외
+                tsFileName = "Download\\" + segments[i]
+                response = requests.get(vodSrc + segments[i], stream=True, verify= False)
+                progress = int(50 * i / fileLength) # i / index.m3u8 파일 줄 갯수를 다운로드 진행 상황으로 표시.
+                with open(tsFileName, "wb") as f:
+                    os.system('cls')
+                    print('Download\\'+ fileName +'.ts is downloading..')
+                    sys.stdout.write("\r[%s%s]" % ('=' * progress, ' ' * (50-progress)) )   
+                    f.write(response.content)
+                with open(tsFileName, 'rb') as mergefile:
+                    shutil.copyfileobj(mergefile, merged)   # 파일 하나로 합침.
+                os.remove(tsFileName)
+
 
 size = 0
 courseName = ""
 if __name__ == '__main__':
-    # exe에서 multiprocessing 오류 발생 막는 코드
-    multiprocessing.freeze_support()
+
     #크롬 버전 읽어오기
     try:
         pe = pefile.PE(r'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe')
@@ -176,7 +183,6 @@ if __name__ == '__main__':
 
         
     urllib3.disable_warnings()
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
@@ -220,7 +226,6 @@ if __name__ == '__main__':
             print('해당 주차 강의를 다운로드 합니다. 완료될 때까지 기다려주세요.')
             print('- 온라인 출석부에서 해당 동영상 강의 열람 횟수가 1회 증가합니다.')
             vod_list = week.find_all('li',{'class':'activity vod modtype_vod'})
-            sourceList = []
             for i in range(0,len(vod_list)):
                 vodLink = re.search(r'https://.*\d*',str(vod_list[i])).group()
                 vodLink = vodLink[:vodLink.find('"')]
@@ -233,20 +238,11 @@ if __name__ == '__main__':
                     da.dismiss()
                 except:
                     print("",end='')
-                sourceIter = []
                 html=driver.page_source
                 soup = BS4(html,'html.parser')
-                source = soup.find('source').attrs['src']
-                source = re.findall(r'\/[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+\/',source)[0][1:-1]
-                sourceIter.append('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
                 source = str(soup.find_all('source'))
                 source = source[source.find('https'):source.find('m3u8')+4]
-                sourceIter.append(courseName+week.attrs['aria-label']+'_'+str(i+1))
-                sourceList.append(sourceIter)
-            pool = multiprocessing.Pool()
-            pool.map(fileDownload,sourceList)
-            pool.close()
-            pool.join()
+                fileDownload(courseName+week.attrs['aria-label']+'_'+str(i+1),source)
 
     driver.get('https://plato.pusan.ac.kr/')
     driver.find_element_by_xpath('//*[@id="page-header"]/div[1]/div[2]/ul/li[2]/a').click()
