@@ -151,7 +151,7 @@ if __name__ == '__main__':
             pe = pefile.PE(r'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
             FileVersion = pe.FileInfo[0][0].StringTable[0].entries[b'FileVersion']
         except:
-            FileVersion = '90'
+            FileVersion = '91'
 
     FileVersion = FileVersion.decode("utf-8")
     FileVersion = FileVersion[:2]
@@ -168,6 +168,8 @@ if __name__ == '__main__':
         webdriverLocation = 'Chrome_89.0.4389.23\\chromedriver.exe'
     elif FileVersion == '90':
         webdriverLocation = 'Chrome_90.0.4430.24\\chromedriver.exe'
+    elif FileVersion == '91':
+        webdriverLocation = 'Chrome_91.0.4472.19\\chromedriver.exe'
     else:
         # 수동으로 webdriver 선택
         # tkinter.Tk().withdraw() 
