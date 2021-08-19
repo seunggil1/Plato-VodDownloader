@@ -170,6 +170,8 @@ if __name__ == '__main__':
         webdriverLocation = 'Chrome_90.0.4430.24\\chromedriver.exe'
     elif FileVersion == '91':
         webdriverLocation = 'Chrome_91.0.4472.19\\chromedriver.exe'
+    elif FileVersion == '92':
+        webdriverLocation = 'Chrome_92.0.4515.107\\chromedriver.exe'
     else:
         # 수동으로 webdriver 선택
         # tkinter.Tk().withdraw() 
