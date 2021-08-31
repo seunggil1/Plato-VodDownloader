@@ -9,28 +9,29 @@ import urllib3
 def webDriverDownload(downloadInfo): #[url, fileName]
     vodSrc = downloadInfo[0]
     file_name = downloadInfo[1]
-    response = requests.get(vodSrc, stream=True, verify= False)
+    response = requests.get(vodSrc, stream=True)
     responseHeader = response.headers
     file_name = "chromeWebDriver\\" + file_name
-    if not os.path.exists(os.path.dirname(file_name)):
-        try:
-            os.makedirs(os.path.dirname(file_name))
-        except OSError as exc: # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
+
     with open(file_name, "wb") as f:
         print("Downloading '%s'" % file_name[16:])
         total_length = responseHeader.get('content-length')
         f.write(response.content)
 
 def update():
+    if not os.path.exists('chromeWebDriver'):
+        try:
+            os.makedirs('chromeWebDriver')
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
     try :
         jsonFile = open('chromeWebDriver\\update.json', 'r')
         versionInfo = json.loads(jsonFile.read())['version']
         jsonFile.close()
     except Exception as e:
         versionInfo = 0
-        
+    
     response = requests.get("https://raw.githubusercontent.com/seunggil1/Plato-VodDownloader/master/chromeWebDriver/update.json")
     sourceList = []
     jsonFile = json.loads(response.text)
@@ -49,5 +50,5 @@ def update():
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    urllib3.disable_warnings()
+    requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
     update()

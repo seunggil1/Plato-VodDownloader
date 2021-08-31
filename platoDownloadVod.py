@@ -113,7 +113,7 @@ def printWeekList(select : int):
 
 def fileDownload(downloadInfo):
     vodSrc = downloadInfo[0]
-    response = requests.get(vodSrc, stream=True, verify= False)
+    response = requests.get(vodSrc, stream=True)
     responseHeader = response.headers
     file_name = responseHeader.get('Content-disposition')
     file_name = downloadInfo[1] + file_name[file_name.rfind('.'):-1]
@@ -144,7 +144,7 @@ courseName = ""
 if __name__ == '__main__':
     # exe에서 multiprocessing 오류 발생 막는 코드
     multiprocessing.freeze_support()
-    urllib3.disable_warnings()
+    requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     update()
     #크롬 버전 읽어오기
