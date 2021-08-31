@@ -17,7 +17,9 @@ import time
 import re
 import shutil
 import multiprocessing
+import json
 
+from patch import update
 def login():
     size = os.get_terminal_size().columns
     print("="*size)
@@ -142,6 +144,9 @@ courseName = ""
 if __name__ == '__main__':
     # exe에서 multiprocessing 오류 발생 막는 코드
     multiprocessing.freeze_support()
+    urllib3.disable_warnings()
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    update()
     #크롬 버전 읽어오기
     try:
         pe = pefile.PE(r'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe')
@@ -151,28 +156,16 @@ if __name__ == '__main__':
             pe = pefile.PE(r'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
             FileVersion = pe.FileInfo[0][0].StringTable[0].entries[b'FileVersion']
         except:
-            FileVersion = '91'
+            FileVersion = '93'
 
     FileVersion = FileVersion.decode("utf-8")
     FileVersion = FileVersion[:2]
 
-    if FileVersion == '85':
-        webdriverLocation = 'Chrome_85.0.4183.87\\chromedriver.exe'
-    elif FileVersion == '86':
-        webdriverLocation = 'Chrome_86.0.4240.22\\chromedriver.exe'
-    elif FileVersion == '87':
-        webdriverLocation = 'Chrome_87.0.4280.20\\chromedriver.exe'
-    elif FileVersion == '88':
-        webdriverLocation = 'Chrome_88.0.4324.96\\chromedriver.exe'
-    elif FileVersion == '89':
-        webdriverLocation = 'Chrome_89.0.4389.23\\chromedriver.exe'
-    elif FileVersion == '90':
-        webdriverLocation = 'Chrome_90.0.4430.24\\chromedriver.exe'
-    elif FileVersion == '91':
-        webdriverLocation = 'Chrome_91.0.4472.19\\chromedriver.exe'
-    elif FileVersion == '92':
-        webdriverLocation = 'Chrome_92.0.4515.107\\chromedriver.exe'
-    else:
+    try:
+        versionInfo = open('chromeWebDriver\\update.json', 'r')
+        webdriverLocation = json.loads(versionInfo.read())[str(FileVersion)]
+        versionInfo.close()
+    except:
         # 수동으로 webdriver 선택
         # tkinter.Tk().withdraw() 
         # webdriverLocation = tkinter.filedialog.askopenfile(filetypes =[('webdriver', '*.exe')]) 
@@ -180,9 +173,6 @@ if __name__ == '__main__':
         time.sleep(3)
         exit()
 
-        
-    urllib3.disable_warnings()
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
