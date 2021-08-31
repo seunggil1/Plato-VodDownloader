@@ -1,39 +1,42 @@
 {
     "version" : 20210831,
-    "85" : {
-        "name" : "85.0.4183.87",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_85.0.4183.87.exe"
-    },
-    "86" : {
-        "name" : "86.0.4240.22",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_86.0.4240.22.exe"
-    },
-    "87" : {
-        "name" : "87.0.4280.20",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_87.0.4280.20.exe"
-    },
-    "88" : {
-        "name" : "88.0.4324.96",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_88.0.4324.96.exe"
-    },
-    "89" : {
-        "name" : "89.0.4389.23",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_89.0.4389.23.exe"
-    },
-    "90" : {
-        "name" : "90.0.4430.24",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_90.0.4430.24.exe"
-    },
-    "91" : {
-        "name" : "91.0.4472.19",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_91.0.4472.19.exe"
-    },
-    "92" : {
-        "name" : "92.0.4515.107",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_92.0.4515.107.exe"
-    },
-    "93" : {
-        "name" : "93.0.4577.15",
-        "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_93.0.4577.15.exe"
-    }
+    "webDrivers": [
+        {
+            "name" : "85.0.4183.87",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_85.0.4183.87.exe"
+        },
+        {
+            "name" : "86.0.4240.22",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_86.0.4240.22.exe"
+        },
+        {
+            "name" : "87.0.4280.20",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_87.0.4280.20.exe"
+        },
+        {
+            "name" : "88.0.4324.96",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_88.0.4324.96.exe"
+        },
+        {
+            "name" : "89.0.4389.23",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_89.0.4389.23.exe"
+        },
+        {
+            "name" : "90.0.4430.24",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_90.0.4430.24.exe"
+        },
+        {
+            "name" : "91.0.4472.19",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_91.0.4472.19.exe"
+        },
+        {
+            "name" : "92.0.4515.107",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_92.0.4515.107.exe"
+        },
+        {
+            "name" : "93.0.4577.15",
+            "src" : "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_93.0.4577.15.exe"
+        }
+    ]
+    
 }
