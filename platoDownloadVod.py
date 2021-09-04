@@ -237,7 +237,7 @@ if __name__ == '__main__':
                 sourceIter.append('https://plato.pusan.ac.kr/local/csmsmedia/apis/download.php?uuid='+source)
                 source = str(soup.find_all('source'))
                 source = source[source.find('https'):source.find('m3u8')+4]
-                sourceIter.append(courseName+week.attrs['aria-label']+'_'+str(i+1))
+                sourceIter.append(courseName+' '+week.attrs['aria-label']+'_'+str(i+1))
                 sourceList.append(sourceIter)
             pool = multiprocessing.Pool()
             pool.map(fileDownload,sourceList)
