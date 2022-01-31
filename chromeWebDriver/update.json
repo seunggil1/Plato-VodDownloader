@@ -1,5 +1,5 @@
 {
-    "version": 20211122, 
+    "version": 20220131, 
     "webDrivers": [
         {
             "name": "85.0.4183.87", 
@@ -53,6 +53,10 @@
         {
             "name": "97.0.4692.20",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_97.0.4692.20.exe"
+        },
+        {
+            "name": "98.0.4758.48",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_98.0.4758.48.exe"
         }
     ],
     "85" : "chromeWebDriver\\Chrome_85.0.4183.87.exe",
@@ -67,5 +71,6 @@
     "94" : "chromeWebDriver\\Chrome_94.0.4606.41.exe",
     "95" : "chromeWebDriver\\Chrome_95.0.4638.17.exe",
     "96" : "chromeWebDriver\\Chrome_96.0.4664.45.exe",
-    "97" : "chromeWebDriver\\Chrome_97.0.4692.20.exe"
+    "97" : "chromeWebDriver\\Chrome_97.0.4692.20.exe",
+    "98" : "chromeWebDriver\\Chrome_98.0.4758.48.exe"
 }
