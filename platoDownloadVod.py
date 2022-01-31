@@ -156,11 +156,10 @@ if __name__ == '__main__':
             pe = pefile.PE(r'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
             FileVersion = pe.FileInfo[0][0].StringTable[0].entries[b'FileVersion']
         except:
-            FileVersion = '93'
+            FileVersion = '95'
 
     FileVersion = FileVersion.decode("utf-8")
     FileVersion = FileVersion[:2]
-
     try:
         versionInfo = open('chromeWebDriver\\update.json', 'r')
         webdriverLocation = json.loads(versionInfo.read())[str(FileVersion)]
@@ -182,8 +181,8 @@ if __name__ == '__main__':
     
     try:
         driver = webdriver.Chrome(webdriverLocation, options= options)
-    except:
-        print("Chrome execution error")
+    except Exception as e:
+        print("Chrome execution error : \n", str(e))
         time.sleep(3)
         exit()
 
