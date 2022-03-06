@@ -57,6 +57,14 @@
         {
             "name": "98.0.4758.48",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_98.0.4758.48.exe"
+        },
+        {
+            "name": "99.0.4844.51",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_99.0.4844.51.exe"
+        },
+        {
+            "name": "100.0.4896.20",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_100.0.4896.20.exe"
         }
     ],
     "85" : "chromeWebDriver\\Chrome_85.0.4183.87.exe",
@@ -72,5 +80,7 @@
     "95" : "chromeWebDriver\\Chrome_95.0.4638.17.exe",
     "96" : "chromeWebDriver\\Chrome_96.0.4664.45.exe",
     "97" : "chromeWebDriver\\Chrome_97.0.4692.20.exe",
-    "98" : "chromeWebDriver\\Chrome_98.0.4758.48.exe"
+    "98" : "chromeWebDriver\\Chrome_98.0.4758.48.exe",
+    "99" : "chromeWebDriver\\Chrome_99.0.4844.51.exe",
+    "100" : "chromeWebDriver\\Chrome_100.0.4896.20.exe"
 }
