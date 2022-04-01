@@ -159,7 +159,7 @@ if __name__ == '__main__':
             FileVersion = '95'
 
     FileVersion = FileVersion.decode("utf-8")
-    FileVersion = FileVersion[:2]
+    FileVersion = FileVersion[:FileVersion.index('.')]
     try:
         versionInfo = open('chromeWebDriver\\update.json', 'r')
         webdriverLocation = json.loads(versionInfo.read())[str(FileVersion)]
