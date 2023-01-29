@@ -95,15 +95,15 @@
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_107.0.5304.62.exe"
         },
         {
-            "name": "108.0.5249.21",
+            "name": "108.0.5359.71",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_108.0.5359.71.exe"
         },
         {
-            "name": "109.0.5249.21",
+            "name": "109.0.5414.25",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_109.0.5414.25.exe"
         },
         {
-            "name": "110.0.5249.21",
+            "name": "110.0.5481.30",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_110.0.5481.30.exe"
         }
     ],
