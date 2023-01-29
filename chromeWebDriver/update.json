@@ -89,6 +89,22 @@
         {
             "name": "106.0.5249.21",
             "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_106.0.5249.21.exe"
+        },
+        {
+            "name": "107.0.5304.62",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_107.0.5304.62.exe"
+        },
+        {
+            "name": "108.0.5249.21",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_108.0.5359.71.exe"
+        },
+        {
+            "name": "109.0.5249.21",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_109.0.5414.25.exe"
+        },
+        {
+            "name": "110.0.5249.21",
+            "src": "https://github.com/seunggil1/Plato-VodDownloader/raw/master/chromeWebDriver/Chrome_110.0.5481.30.exe"
         }
     ],
     "85" : "chromeWebDriver\\Chrome_85.0.4183.87.exe",
@@ -112,5 +128,9 @@
     "103" : "chromeWebDriver\\Chrome_103.0.5060.134.exe",
     "104" : "chromeWebDriver\\Chrome_104.0.5112.79.exe",
     "105" : "chromeWebDriver\\Chrome_105.0.5195.52.exe",
-    "106" : "chromeWebDriver\\Chrome_106.0.5249.21.exe"
+    "106" : "chromeWebDriver\\Chrome_106.0.5249.21.exe",
+    "107" : "chromeWebDriver\\Chrome_107.0.5304.62.exe",
+    "108" : "chromeWebDriver\\Chrome_108.0.5359.71.exe",
+    "109" : "chromeWebDriver\\Chrome_109.0.5414.25.exe",
+    "110" : "chromeWebDriver\\Chrome_110.0.5481.30.exe"
 }
